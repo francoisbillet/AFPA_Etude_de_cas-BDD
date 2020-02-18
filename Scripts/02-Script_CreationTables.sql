@@ -1,0 +1,147 @@
+DROP TABLE IF EXISTS Client CASCADE;
+DROP TABLE IF EXISTS Materiel_Materiel CASCADE;
+DROP TABLE IF EXISTS Contact CASCADE;
+DROP TABLE IF EXISTS Division CASCADE;
+DROP TABLE IF EXISTS Equipe CASCADE;
+DROP TABLE IF EXISTS Fonction CASCADE;
+DROP TABLE IF EXISTS Materiel CASCADE;
+DROP TABLE IF EXISTS Pole CASCADE;
+DROP TABLE IF EXISTS Projet CASCADE;
+DROP TABLE IF EXISTS Role CASCADE;
+DROP TABLE IF EXISTS Salarie CASCADE;
+DROP TABLE IF EXISTS Salarie_Equipe CASCADE;
+DROP TABLE IF EXISTS Salarie_Tache CASCADE;
+DROP TABLE IF EXISTS Tache CASCADE;
+
+CREATE TABLE Client
+(
+  id_client SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL,
+  raison_sociale CHARACTER VARYING(32) NOT NULL UNIQUE,
+  adresse CHARACTER VARYING(32) NOT NULL,
+  activite CHARACTER VARYING(40) NOT NULL
+);
+
+
+CREATE TABLE Materiel_Materiel
+(
+  id_materiel BIGINT NOT NULL,
+  id_materiel2 BIGINT NOT NULL
+);
+
+
+CREATE TABLE Contact
+(
+  id_contact SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL,
+  prenom CHARACTER VARYING(32) NOT NULL,
+  num_tel CHAR(10) NOT NULL,
+  adre_mail CHARACTER VARYING(32) NOT NULL,
+  id_client BIGINT NOT NULL,
+  id_role BIGINT NOT NULL
+);
+
+
+CREATE TABLE Division
+(
+  id_div SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL UNIQUE,
+  adresse CHARACTER VARYING(32) NOT NULL,
+  ville CHARACTER VARYING(20) NOT NULL
+);
+
+
+CREATE TABLE Equipe
+(
+  id_equipe SERIAL NOT NULL,
+  specialisation CHARACTER VARYING(20) NOT NULL,
+  nb_employes BIGINT NULL,
+  id_pole BIGINT NOT NULL
+);
+
+
+CREATE TABLE Fonction
+(
+  id_fonction SERIAL NOT NULL,
+  nom CHARACTER VARYING(30) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE Materiel
+(
+  id_materiel SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NULL,
+  type CHARACTER VARYING(20) NULL,
+  ref_constructeur CHAR(5) NULL,
+  date_deb DATE NULL,
+  date_fin DATE NULL,
+  num_matricule CHAR(5) NOT NULL
+);
+
+
+CREATE TABLE Pole
+(
+  id_pole SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE Projet
+(
+  id_projet SERIAL NOT NULL,
+  description CHARACTER VARYING(32) NOT NULL,
+  theme CHARACTER VARYING(32) NOT NULL,
+  date_debut DATE NOT NULL,
+  date_fin DATE NULL,
+  num_matricule CHAR(5) NOT NULL,
+  id_client BIGINT NOT NULL
+);
+
+
+CREATE TABLE Role
+(
+  id_role SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL UNIQUE
+);
+
+
+CREATE TABLE Salarie
+(
+  num_matricule CHAR(5) NOT NULL UNIQUE,
+  nom CHARACTER VARYING(32) NOT NULL,
+  prenom CHARACTER VARYING(32) NOT NULL,
+  num_tel CHAR(10) NULL UNIQUE,
+  trigramme CHAR(3) NULL,
+  adr_mail CHARACTER VARYING(32) NULL UNIQUE,
+  salaire NUMERIC NULL,
+  id_div BIGINT NOT NULL,
+  num_matricule2 CHAR(5) NOT NULL,
+  id_fonction BIGINT NOT NULL
+);
+
+
+CREATE TABLE Salarie_Equipe
+(
+  date_deb DATE NOT NULL,
+  date_fin DATE NULL,
+  num_matricule CHAR(5) NOT NULL,
+  id_equipe BIGINT NOT NULL
+);
+
+
+CREATE TABLE Salarie_Tache
+(
+  date_deb DATE NOT NULL,
+  date_fin DATE NULL,
+  id_tache BIGINT NOT NULL,
+  num_matricule CHAR(5) NOT NULL
+);
+
+
+CREATE TABLE Tache
+(
+  id_tache SERIAL NOT NULL,
+  nom CHARACTER VARYING(32) NOT NULL,
+  description CHARACTER VARYING(52) NOT NULL,
+  id_projet BIGINT NOT NULL
+);
